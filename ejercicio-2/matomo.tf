@@ -21,14 +21,34 @@ resource "kubernetes_deployment" "matomo" {
       spec {
         container {
           name  = "matomo"
-          image = "matomo:latest"
+          image = "${var.dockerhub_username}/matomo-custom:latest"
           port {
             container_port = 80
           }
+          env {
+            name  = "MATOMO_DATABASE_HOST"
+            value = "mariadb-service"
+          }
+          env {
+            name  = "MATOMO_DATABASE_ADAPTER"
+            value = "mysql"
+          }
+          env {
+            name  = "MATOMO_DATABASE_USERNAME"
+            value = var.mariadb_user
+          }
+          env {
+            name  = "MATOMO_DATABASE_PASSWORD"
+            value = var.mariadb_password
+          }
+          env {
+            name  = "MATOMO_DATABASE_DBNAME"
+            value = var.mariadb_database
+          }
           volume_mount {
-          name       = "matomo-storage"
-          mount_path = "/var/www/html"
-        }
+            name       = "matomo-storage"
+            mount_path = "/var/www/html"
+          }
         }
         volume {
           name = "matomo-storage"

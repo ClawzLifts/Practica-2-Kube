@@ -25,16 +25,20 @@ resource "kubernetes_deployment" "mariadb" {
             container_port = 3306
           }
           env {
-            name  = "ALLOW_EMPTY_PASSWORD"
-            value = "yes"
+            name  = "MARIADB_USER"
+            value = var.mariadb_user
           }
           env {
-            name  = "MARIADB_USER"
-            value = "matomo_user"
+            name  = "MARIADB_PASSWORD"
+            value = var.mariadb_password
           }
           env {
             name  = "MARIADB_DATABASE"
-            value = "matomo_db"
+            value = var.mariadb_database
+          }
+          env {
+            name  = "MARIADB_ROOT_PASSWORD"
+            value = var.mariadb_password
           }
           volume_mount {
             name       = "mariadb-storage"
