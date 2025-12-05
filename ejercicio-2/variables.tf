@@ -19,5 +19,5 @@ variable "mariadb_database" {
 variable "dockerhub_username" {
   description = "Docker Hub username for custom Matomo image"
   type        = string
-  default     = "clawzlifts"  # Cambiar por tu usuario de Docker Hub
+  default     = "clawzlifts"  
 }
